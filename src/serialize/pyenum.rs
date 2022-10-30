@@ -38,7 +38,11 @@ impl Serialize for EnumSerializer {
     where
         S: Serializer,
     {
-        let value = ffi!(PyObject_GetAttr(self.ptr, VALUE_STR));
+        let value = if self.opts & ENUM_NAME != 0 {
+            ffi!(PyObject_GetAttr(self.ptr, NAME_STR))
+        } else {
+            ffi!(PyObject_GetAttr(self.ptr, VALUE_STR))
+        };
         ffi!(Py_DECREF(value));
         PyObjectSerializer::new(
             value,

@@ -118,3 +118,14 @@ class TestEnum:
         assert (
             orjson.dumps({IntEnum.ONE: 1}, option=orjson.OPT_NON_STR_KEYS) == b'{"1":1}'
         )
+
+    def test_enum_name_option(self):
+        assert orjson.dumps(UnspecifiedEnum.A, option=orjson.OPT_ENUM_NAME) ==  b'"A"'
+        assert orjson.dumps(UnspecifiedEnum.B, option=orjson.OPT_ENUM_NAME) ==   b'"B"'
+        assert orjson.dumps(IntEnum.ONE, option=orjson.OPT_ENUM_NAME) ==   b'"ONE"'
+        assert orjson.dumps(IntEnumEnum.ONE, option=orjson.OPT_ENUM_NAME) ==   b'"ONE"'
+        assert orjson.dumps(IntFlagEnum.ONE, option=orjson.OPT_ENUM_NAME) ==   b'"ONE"'
+        assert orjson.dumps(FlagEnum.ONE, option=orjson.OPT_ENUM_NAME) ==   b'"ONE"'
+        assert orjson.dumps(FloatEnum.ONE, option=orjson.OPT_ENUM_NAME) ==   b'"ONE"'
+        assert orjson.dumps(FloatEnum.ONE, option=orjson.OPT_ENUM_NAME) ==   b'"ONE"'
+        assert orjson.dumps(StrEnum.AAA, option=orjson.OPT_ENUM_NAME) ==   b'"AAA"'

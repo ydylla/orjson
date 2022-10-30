@@ -150,12 +150,13 @@ pub unsafe extern "C" fn orjson_init_exec(mptr: *mut PyObject) -> c_int {
     opt!(mptr, "OPT_SORT_KEYS\0", opt::SORT_KEYS);
     opt!(mptr, "OPT_STRICT_INTEGER\0", opt::STRICT_INTEGER);
     opt!(mptr, "OPT_UTC_Z\0", opt::UTC_Z);
+    opt!(mptr, "OPT_ENUM_NAME\0", opt::ENUM_NAME);
 
     add!(mptr, "JSONDecodeError\0", typeref::JsonDecodeError);
     add!(mptr, "JSONEncodeError\0", typeref::JsonEncodeError);
 
     // maturin>=0.11.0 creates a python package that imports *, hiding dunder by default
-    let all: [&str; 20] = [
+    let all: [&str; 21] = [
         "__all__\0",
         "__version__\0",
         "dumps\0",
@@ -176,6 +177,7 @@ pub unsafe extern "C" fn orjson_init_exec(mptr: *mut PyObject) -> c_int {
         "OPT_SORT_KEYS\0",
         "OPT_STRICT_INTEGER\0",
         "OPT_UTC_Z\0",
+        "OPT_ENUM_NAME\0",
     ];
 
     let pyall = PyTuple_New(all.len() as isize);
