@@ -28,8 +28,8 @@ class FlagEnum(enum.Flag):
     ONE = 1
 
 
-class AutoEnum(enum.auto):
-    A = "a"
+class AutoEnum(enum.Enum):
+    A = enum.auto()
 
 
 class FloatEnum(float, enum.Enum):
@@ -96,7 +96,7 @@ class TestEnum:
         assert orjson.dumps(FlagEnum.ONE) == b"1"
 
     def test_auto_enum(self):
-        assert orjson.dumps(AutoEnum.A) == b'"a"'
+        assert orjson.dumps(AutoEnum.A) == b'1'
 
     def test_float_enum(self):
         assert orjson.dumps(FloatEnum.ONE) == b"1.1"
@@ -129,3 +129,4 @@ class TestEnum:
         assert orjson.dumps(FloatEnum.ONE, option=orjson.OPT_ENUM_NAME) ==   b'"ONE"'
         assert orjson.dumps(FloatEnum.ONE, option=orjson.OPT_ENUM_NAME) ==   b'"ONE"'
         assert orjson.dumps(StrEnum.AAA, option=orjson.OPT_ENUM_NAME) ==   b'"AAA"'
+        assert orjson.dumps(AutoEnum.A, option=orjson.OPT_ENUM_NAME) ==  b'"A"'
