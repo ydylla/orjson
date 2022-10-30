@@ -239,6 +239,18 @@ b"[]"
 b"[]\n"
 ```
 
+##### OPT_ENUM_NAME
+
+Serialize enums using their name instead of value.
+
+```python
+>>> import orjson, enum
+>>> class A(enum.Enum):
+        FOO = 1
+>>> orjson.dumps(A.FOO, option=orjson.OPT_ENUM_NAME)
+b'"FOO"'
+```
+
 ##### OPT_INDENT_2
 
 Pretty-print output with an indent of two spaces. This is equivalent to
@@ -702,7 +714,7 @@ To assume datetimes without timezone are UTC, use the option `orjson.OPT_NAIVE_U
 
 ### enum
 
-orjson serializes enums natively. Options apply to their values.
+orjson serializes enums natively. By default orjson uses the enum value but with the `OPT_ENUM_NAME` option it can also use the name.
 
 ```python
 >>> import enum, datetime, orjson
@@ -713,6 +725,8 @@ class DatetimeEnum(enum.Enum):
 b'"1970-01-01T00:00:00"'
 >>> orjson.dumps(DatetimeEnum.EPOCH, option=orjson.OPT_NAIVE_UTC)
 b'"1970-01-01T00:00:00+00:00"'
+>>> orjson.dumps(DatetimeEnum.EPOCH, option=orjson.OPT_ENUM_NAME)
+b'"EPOCH"'
 ```
 
 Enums with members that are not supported types can be serialized using
