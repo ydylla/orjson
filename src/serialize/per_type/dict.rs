@@ -177,7 +177,7 @@ macro_rules! impl_serialize_entry {
                     $value,
                     $self.state,
                     $self.default,
-                )))?;
+                ), $self.state.opts()))?;
             }
             ObType::NumpyArray => {
                 $map.serialize_key($key).unwrap();

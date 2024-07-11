@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
-use crate::opt::{
-    Opt, PASSTHROUGH_DATACLASS, PASSTHROUGH_DATETIME, PASSTHROUGH_SUBCLASS, SERIALIZE_NUMPY,
-};
+use crate::opt::{ENUM_NAME, Opt, PASSTHROUGH_DATACLASS, PASSTHROUGH_DATETIME, PASSTHROUGH_SUBCLASS, SERIALIZE_NUMPY};
 use crate::serialize::per_type::{is_numpy_array, is_numpy_scalar};
 use crate::typeref::{
     BOOL_TYPE, DATACLASS_FIELDS_STR, DATETIME_TYPE, DATE_TYPE, DICT_TYPE, ENUM_TYPE, FLOAT_TYPE,
@@ -34,7 +32,10 @@ pub enum ObType {
 
 pub fn pyobject_to_obtype(obj: *mut pyo3_ffi::PyObject, opts: Opt) -> ObType {
     let ob_type = ob_type!(obj);
-    if is_class_by_type!(ob_type, STR_TYPE) {
+
+    if opt_enabled!(opts, ENUM_NAME) && is_subclass_by_type!(ob_type, ENUM_TYPE) {
+        ObType::Enum
+    } else if is_class_by_type!(ob_type, STR_TYPE) {
         ObType::Str
     } else if is_class_by_type!(ob_type, INT_TYPE) {
         ObType::Int

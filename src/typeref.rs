@@ -74,6 +74,7 @@ pub static mut ARRAY_STRUCT_STR: *mut PyObject = null_mut();
 pub static mut DTYPE_STR: *mut PyObject = null_mut();
 pub static mut DESCR_STR: *mut PyObject = null_mut();
 pub static mut VALUE_STR: *mut PyObject = null_mut();
+pub static mut NAME_STR: *mut PyObject = null_mut();
 pub static mut INT_ATTR_STR: *mut PyObject = null_mut();
 
 #[cfg(feature = "yyjson")]
@@ -193,6 +194,7 @@ fn _init_typerefs_impl() -> bool {
         DTYPE_STR = PyUnicode_InternFromString("dtype\0".as_ptr() as *const c_char);
         DESCR_STR = PyUnicode_InternFromString("descr\0".as_ptr() as *const c_char);
         VALUE_STR = PyUnicode_InternFromString("value\0".as_ptr() as *const c_char);
+        NAME_STR = PyUnicode_InternFromString("name\0".as_ptr() as *const c_char);
         DEFAULT = PyUnicode_InternFromString("default\0".as_ptr() as *const c_char);
         OPTION = PyUnicode_InternFromString("option\0".as_ptr() as *const c_char);
         JsonEncodeError = pyo3_ffi::PyExc_TypeError;

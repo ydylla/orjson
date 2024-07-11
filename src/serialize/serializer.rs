@@ -102,7 +102,7 @@ impl Serialize for PyObjectSerializer {
                 }
             }
             ObType::Dataclass => DataclassGenericSerializer::new(self).serialize(serializer),
-            ObType::Enum => EnumSerializer::new(self).serialize(serializer),
+            ObType::Enum => EnumSerializer::new(self, self.state.opts()).serialize(serializer),
             ObType::NumpyArray => NumpySerializer::new(self).serialize(serializer),
             ObType::NumpyScalar => {
                 NumpyScalar::new(self.ptr, self.state.opts()).serialize(serializer)

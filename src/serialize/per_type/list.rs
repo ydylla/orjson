@@ -161,7 +161,7 @@ impl Serialize for ListTupleSerializer {
                         value,
                         self.state,
                         self.default,
-                    )))?;
+                    ), self.state.opts()))?;
                 }
                 ObType::NumpyArray => {
                     seq.serialize_element(&NumpySerializer::new(&PyObjectSerializer::new(
